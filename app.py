@@ -26,3 +26,30 @@ session = Session()
 
 Base = declarative_base()
 # Criando uma classe base para as outras classes que serão geradas posteriormente.
+
+
+class Carro(Base):
+    __tablename__ = 'carros'
+
+    id = Column(Integer(), primary_key=True)
+    name = Column(String(100), nullable=False)
+    created_on = Column(DateTime(), default=datetime.now)
+    updated_on = Column(DateTime(), default=datetime.now,
+                        onupdate=datetime.now)
+    content = Column(Text)
+    marca_id = Column(Integer(), ForeignKey('marcas.id'))
+
+
+class Marca(Base):
+    __tablename__ = 'marcas'
+
+    id = Column(Integer(), primary_key=True)
+    name = Column(String(100))
+    country = Column(String(100))
+    email = Column(String(255), nullable=False)
+    joined = Column(DateTime(), default=datetime.now)
+
+    cars = relationship('Carro', backref='marca')
+
+
+Base.metadata.create_all(engine)
