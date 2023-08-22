@@ -37,6 +37,7 @@ class Carro(Base):
     updated_on = Column(DateTime(), default=datetime.now,
                         onupdate=datetime.now)
     content = Column(Text)
+    released = Column(Integer())
     marca_id = Column(Integer(), ForeignKey('marcas.id'))
 
 
@@ -46,10 +47,53 @@ class Marca(Base):
     id = Column(Integer(), primary_key=True)
     name = Column(String(100))
     country = Column(String(100))
-    email = Column(String(255), nullable=False)
+    contact = Column(String(25))
     joined = Column(DateTime(), default=datetime.now)
 
     cars = relationship('Carro', backref='marca')
 
 
 Base.metadata.create_all(engine)
+
+vw = Marca(
+    name="Volkswagen",
+    country="Alemanha",
+    contact="0800 019 5775"
+)
+
+fiat = Marca(
+    name="Fiat",
+    country="Itália",
+    contact="0800 707 1000"
+)
+
+gm = Marca(
+    name="Chevrolet",
+    country="Estados Unidos",
+    contact="0800 702 4200"
+)
+
+carro1 = Carro(
+    name="Gol",
+    content="Lançado em 1980, o Gol é considerado um dos maiores sucessos da Volkswagen do Brasil de todos os tempos. É também o primeiro e único carro produzido no Brasil a ultrapassar a marca de 5 milhões de unidades produzidas até hoje, tornando-se, em fevereiro de 2009, o primeiro e único a superar o Fusca em vendas. Nos mais de 40 anos de produção, teve mais de 8,5 milhões de unidades produzidas, sendo o carro mais vendido da história do Brasil.",
+    released=1980,
+    marca=vw
+)
+
+carro2 = Carro(
+    name="Uno",
+    content="O Uno é um automóvel compacto fabricado pela Fiat, lançado na Europa em 1983. Foi lançado no Brasil no ano seguinte, e sua nova geração (projetada no Brasil) só foi lançada em 2010, direcionada aos países da América Latina. A versão antiga foi produzida até dezembro de 2013 sendo vendida como Fiat Mille nome adotado inicialmente em 1990, quando adotou um motor com menos de 1 000 cc no Brasil. O nome é uma referência ao número um em italiano.",
+    released=1983,
+    marca=fiat
+)
+
+carro3 = Carro(
+    name="Onix",
+    content="O Onix é um automóvel hatchback, sedan e notchback, produzido pela Chevrolet; desenvolvido e fabricado pela General Motors do Brasil. Em 2013, foi apresentado no salão de São Paulo, sendo uma das atrações da Chevrolet. Lançado com a missão de substituir o Celta, (posteriormente substituiu o Chevrolet Sonic e o Chevrolet Agile) o Onix é baseado na arquitetura global de veículos pequenos da General Motors.",
+    released=2013,
+    marca=gm
+)
+
+session.add_all([vw, fiat, gm, carro1, carro2, carro3])
+session.flush()
+session.commit()
