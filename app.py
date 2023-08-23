@@ -55,45 +55,16 @@ class Marca(Base):
 
 Base.metadata.create_all(engine)
 
-vw = Marca(
-    name="Volkswagen",
-    country="Alemanha",
-    contact="0800 019 5775"
-)
+fiat = session.get(Marca, 2)
+# Selecionando uma marca existente no banco de dados e utilizando-a para adicionar um novo carro.
 
-fiat = Marca(
-    name="Fiat",
-    country="Itália",
-    contact="0800 707 1000"
-)
-
-gm = Marca(
-    name="Chevrolet",
-    country="Estados Unidos",
-    contact="0800 702 4200"
-)
-
-carro1 = Carro(
-    name="Gol",
-    content="Lançado em 1980, o Gol é considerado um dos maiores sucessos da Volkswagen do Brasil de todos os tempos. É também o primeiro e único carro produzido no Brasil a ultrapassar a marca de 5 milhões de unidades produzidas até hoje, tornando-se, em fevereiro de 2009, o primeiro e único a superar o Fusca em vendas. Nos mais de 40 anos de produção, teve mais de 8,5 milhões de unidades produzidas, sendo o carro mais vendido da história do Brasil.",
-    released=1980,
-    marca=vw
-)
-
-carro2 = Carro(
-    name="Uno",
-    content="O Uno é um automóvel compacto fabricado pela Fiat, lançado na Europa em 1983. Foi lançado no Brasil no ano seguinte, e sua nova geração (projetada no Brasil) só foi lançada em 2010, direcionada aos países da América Latina. A versão antiga foi produzida até dezembro de 2013 sendo vendida como Fiat Mille nome adotado inicialmente em 1990, quando adotou um motor com menos de 1 000 cc no Brasil. O nome é uma referência ao número um em italiano.",
-    released=1983,
+palio = Carro(
+    name='Palio',
+    content='Fiat Palio é um automóvel compacto que foi produzido pela Fiat entre 1996 e 2018, tendo sido projetado para mercados emergentes como América Latina, África do Sul, Leste Europeu e Ásia. O nome Palio vem do festival medieval do Pálio ("Palio di Siena"), realizado anualmente na cidade italiana de Siena. Seu projeto foi iniciado em 1992, pelo Centro de Estilo da Fiat do Brasil junto ao estúdio italiano I.DE.A.',
+    released=1996,
     marca=fiat
 )
 
-carro3 = Carro(
-    name="Onix",
-    content="O Onix é um automóvel hatchback, sedan e notchback, produzido pela Chevrolet; desenvolvido e fabricado pela General Motors do Brasil. Em 2013, foi apresentado no salão de São Paulo, sendo uma das atrações da Chevrolet. Lançado com a missão de substituir o Celta, (posteriormente substituiu o Chevrolet Sonic e o Chevrolet Agile) o Onix é baseado na arquitetura global de veículos pequenos da General Motors.",
-    released=2013,
-    marca=gm
-)
-
-session.add_all([vw, fiat, gm, carro1, carro2, carro3])
+session.add(palio)
 session.flush()
 session.commit()
