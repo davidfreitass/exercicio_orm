@@ -60,27 +60,14 @@ fiat = session.get(Marca, 2)
 gm = session.get(Marca, 3)
 # Selecionando uma marca existente no banco de dados e utilizando-a para adicionar um novo carro.
 
-golf = Carro(
-    name='Golf',
-    content='Golf é um automóvel fabricado pela Volkswagen. Foi lançado no mercado europeu em 1974 e no mercado brasileiro em 1995, quando já estava na sua terceira geração. O Golf é, atualmente, o carro de maior sucesso de vendas na história da Volkswagen, superando até o mítico Volkswagen Fusca, carro que substituiu na Europa a partir da década de 1970.',
-    released=1974,
-    marca=vw
-)
+print('-' * 50)
+print('Os carros presentes no sistema que são da marca Volkswagen: ')
+for carros_vw in session.query(Carro).filter(Carro.marca_id == 1):
+    print(carros_vw.name)
 
-jetta = Carro(
-    name='Jetta',
-    content='Desde 1999, a Volkswagen comercializa o sedãn médio no Brasil, durante quase todo este período o modelo foi importado do México. A 4ª geração do modelo foi a primeira a chegar, sendo chamada de Volkswagen Bora. O modelo, em versão única de acabamento era equipada com o mesmo motor a gasolina do Golf brasileiro, o EA 113 2.0, que mais tarde, em 2002, passou a equipar também o Polo e o Polo Sedan. O modelo podia vir com câmbio manual de 5 marchas ou automático Tiptronic de 4 marchas.',
-    released=1979,
-    marca=vw
-)
+print('-' * 50)
+print('Os carros presentes no sistema na ordem do mais novo ao mais antigo: ')
+for carros_novos in session.query(Carro).order_by(Carro.released.desc()):
+    print(f'{carros_novos.name} - {carros_novos.released}')
 
-s10 = Carro(
-    name='S10',
-    content='A S10 é uma picape de porte médio da Chevrolet produzida no Brasil desde 1995 até atualmente. De mecânica relativamente simples, foi campeã de vendas de 1996 até 2005.',
-    released=1995,
-    marca=gm
-)
-
-session.add_all([golf, jetta, s10])
-session.flush()
-session.commit()
+print('-' * 50)
